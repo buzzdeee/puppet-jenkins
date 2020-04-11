@@ -322,7 +322,7 @@ class jenkins(
   Integer $cli_try_sleep                          = $jenkins::params::cli_try_sleep,
   Integer $port                                   = $jenkins::params::port,
   Stdlib::Absolutepath $libdir                    = $jenkins::params::libdir,
-  Stdlib::Absolutepath $sysconfdir                = $jenkins::params::sysconfdir,
+  Optional[Stdlib::Absolutepath] $sysconfdir      = $jenkins::params::sysconfdir,
   Boolean $manage_datadirs                        = $jenkins::params::manage_datadirs,
   Stdlib::Absolutepath $localstatedir             = $jenkins::params::localstatedir,
   Optional[Integer] $executors                    = undef,

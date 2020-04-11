@@ -32,12 +32,13 @@ class jenkins::cli {
   # make sure we always call Exec[jenlins-cli] in case
   # the binary does not exist
   exec { 'check-jenkins-cli':
-    command => '/bin/true',
+    command => 'true',
+    path    => ['/bin', '/usr/bin'],
     creates => $jar,
   }
   ~> exec { 'jenkins-cli' :
     command     => "${extract_jar} && ${move_jar} && ${remove_dir}",
-    path        => ['/bin', '/usr/bin'],
+    path        => ['/bin', '/usr/bin', '/usr/local/bin'],
     cwd         => '/tmp',
     refreshonly => true,
   }
@@ -67,7 +68,7 @@ class jenkins::cli {
   # Do a safe restart of Jenkins (only when notified)
   exec { 'safe-restart-jenkins':
     command     => "${cmd} safe-restart && /bin/sleep 10",
-    path        => ['/bin', '/usr/bin'],
+    path        => ['/bin', '/usr/bin', '/usr/local/bin'],
     tries       => $cli_tries,
     try_sleep   => $cli_try_sleep,
     refreshonly => true,

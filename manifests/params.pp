@@ -80,6 +80,19 @@ class jenkins::params {
         #'JENKINS_AJP_PORT'     => { value => '-1' },
       }
     }
+    'OpenBSD': {
+      $repo                 = false
+      $libdir               = '/usr/local/share/jenkins/'
+      $package_provider     = 'openbsd'
+      $service_provider     = 'openbsd'
+      $sysconfdir           = undef
+      $config_hash_defaults = {
+        # OpenBSD's jenkins package uses it's own variables
+        # which are not compatible with these.
+        #'JENKINS_JAVA_OPTIONS' => { value => $_java_args },
+        #'JENKINS_AJP_PORT'     => { value => '-1' },
+      }
+    }
     default: {
       $repo                 = true
       $libdir               = '/usr/lib/jenkins'

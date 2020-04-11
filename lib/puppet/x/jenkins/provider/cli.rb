@@ -144,8 +144,15 @@ class Puppet::X::Jenkins::Provider::Cli < Puppet::Provider
     tmp.flush
     options[:stdinfile] = tmp.path
     begin
-      Etc.getpwnam('jenkins')
-      FileUtils.chown 'jenkins', 'jenkins', tmp.path if tmpfile_as_param && File.exist?(tmp.path)
+      if Facter.value(:osfamily) == 'OpenBSD'
+        jenkins_user = '_jenkins'
+        jenkins_group = '_jenkins'
+      else
+        jenkins_user = 'jenkins'
+        jenkins_group = 'jenkins'
+      end
+      Etc.getpwnam(jenkins_user)
+      FileUtils.chown jenkins_user, jenkins_group, tmp.path if tmpfile_as_param && File.exist?(tmp.path)
     rescue
       FileUtils.chmod 0o644, tmp.path if tmpfile_as_param && File.exist?(tmp.path)
     end
