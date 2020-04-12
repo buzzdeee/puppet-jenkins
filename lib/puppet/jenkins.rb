@@ -3,11 +3,9 @@ module Puppet
   module Jenkins
     # @return [String] Full path to the Jenkins user's home directory
     def self.home_dir
-      if Facter.value(:osfamily) == 'OpenBSD'
-        return File.expand_path('~_jenkins')
-      else
-        return File.expand_path('~jenkins')
-      end
+      File.expand_path('~jenkins')
+      return unless Facter.value(:osfamily) == 'OpenBSD'
+      File.expand_path('~_jenkins')
     rescue ArgumentError
       # The Jenkins user doesn't exist!
       return nil
@@ -15,11 +13,9 @@ module Puppet
 
     # @return [String] Full path to the Jenkins user's plugin directory
     def self.plugins_dir
-      if Facter.value(:osfamily) == 'OpenBSD'
-        return File.join(home_dir, '.jenkins', 'plugins')
-      else
-        return File.join(home_dir, 'plugins')
-      end
+      File.join(home_dir, 'plugins')
+      return unless Facter.value(:osfamily) == 'OpenBSD'
+      File.join(home_dir, '.jenkins', 'plugins')
     end
   end
 end

@@ -5,7 +5,7 @@ class jenkins::config {
 
   ensure_resource('jenkins::plugin', $jenkins::default_plugins)
 
-  if $::jenkins::sysconfdir {
+  if $jenkins::sysconfdir {
     $config_hash = merge(
       $jenkins::params::config_hash_defaults,
       $jenkins::config_hash
