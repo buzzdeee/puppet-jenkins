@@ -37,6 +37,7 @@ class jenkins::params {
       $libdir               = '/usr/share/jenkins'
       $package_provider     = 'dpkg'
       $service_provider     = undef
+      $service_flags        = undef
       $sysconfdir           = '/etc/default'
       $config_hash_defaults = {
         'JAVA_ARGS' => { value => $_java_args },
@@ -66,12 +67,14 @@ class jenkins::params {
       } else {
         $service_provider = undef
       }
+      $service_flags        = undef
     }
     'Archlinux': {
       $repo                 = false
       $libdir               = '/usr/share/java/jenkins/'
       $package_provider     = 'pacman'
       $service_provider     = undef
+      $service_flags        = undef
       $sysconfdir           = '/etc/conf.d'
       $config_hash_defaults = {
         # Archlinux's jenkins package uses it's own variables
@@ -85,6 +88,7 @@ class jenkins::params {
       $libdir               = '/usr/local/share/jenkins/'
       $package_provider     = 'openbsd'
       $service_provider     = 'openbsd'
+      $service_flags        = "-Djava.io.tmpdir=/var/cache/jenkins -jar /usr/local/share/jenkins/jenkins.war --httpsPort=-1 --ajp13Port=-1"
       $sysconfdir           = undef
       $config_hash_defaults = {
         # OpenBSD's jenkins package uses it's own variables
@@ -98,6 +102,7 @@ class jenkins::params {
       $libdir               = '/usr/lib/jenkins'
       $package_provider     = undef
       $service_provider     = undef
+      $service_flags        = undef
       $sysconfdir           = '/etc/sysconfig'
       $config_hash_defaults = {
         'JENKINS_JAVA_OPTIONS' => { value => $_java_args },

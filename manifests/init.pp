@@ -60,7 +60,7 @@
 #   Enable (or not) the jenkins service
 #
 # @param service_flags
-#   OpenBSD service flags
+#   OpenBSD service flags, for all other OS, undef
 #
 # @param service_ensure
 #   Status of the jenkins service
@@ -305,7 +305,7 @@ class jenkins(
   Boolean $service_enable                         = $jenkins::params::service_enable,
   Enum['running', 'stopped'] $service_ensure      = $jenkins::params::service_ensure,
   Optional[String] $service_provider              = $jenkins::params::service_provider,
-  Optional[String] $service_flags                 = undef,
+  Optional[String] $service_flags                 = $jenkins::params::service_flags,
   Hash $config_hash                               = {},
   Hash $plugin_hash                               = {},
   Hash $job_hash                                  = {},
