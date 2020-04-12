@@ -88,7 +88,7 @@ class jenkins::params {
       $libdir               = '/usr/local/share/jenkins/'
       $package_provider     = 'openbsd'
       $service_provider     = 'openbsd'
-      $service_flags        = "-Djava.io.tmpdir=/var/cache/jenkins -jar /usr/local/share/jenkins/jenkins.war --httpsPort=-1 --ajp13Port=-1"
+      $service_flags        = '-Djava.io.tmpdir=/var/cache/jenkins -jar /usr/local/share/jenkins/jenkins.war --httpsPort=-1 --ajp13Port=-1'
       $sysconfdir           = undef
       $config_hash_defaults = {
         # OpenBSD's jenkins package uses it's own variables

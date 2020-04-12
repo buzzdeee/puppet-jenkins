@@ -23,7 +23,7 @@ class jenkins::cli {
   }
 
   $jar = "${jenkins::libdir}/jenkins-cli.jar"
-  $extract_jar = "jar -xf ${jenkins::libdir}/jenkins.war WEB-INF/jenkins-cli.jar"
+  $extract_jar = "${jenkins::jar_cmd} -xf ${jenkins::libdir}/jenkins.war WEB-INF/jenkins-cli.jar"
   $move_jar = "mv WEB-INF/jenkins-cli.jar ${jar}"
   $remove_dir = 'rm -rf WEB-INF'
   $cli_tries = $jenkins::cli_tries
@@ -38,7 +38,7 @@ class jenkins::cli {
   }
   ~> exec { 'jenkins-cli' :
     command     => "${extract_jar} && ${move_jar} && ${remove_dir}",
-    path        => ['/bin', '/usr/bin', '/usr/local/bin'],
+    path        => ['/bin', '/usr/bin'],
     cwd         => '/tmp',
     refreshonly => true,
   }
@@ -57,7 +57,7 @@ class jenkins::cli {
   # The jenkins cli command with required parameter(s)
   $cmd = join(
     delete_undef_values([
-      'java',
+      $jenkins::java_cmd,
       "-jar ${jar}",
       "-s http://localhost:${port}${prefix}",
       $jenkins::_cli_auth_arg,
@@ -68,7 +68,7 @@ class jenkins::cli {
   # Do a safe restart of Jenkins (only when notified)
   exec { 'safe-restart-jenkins':
     command     => "${cmd} safe-restart && /bin/sleep 10",
-    path        => ['/bin', '/usr/bin', '/usr/local/bin'],
+    path        => ['/bin', '/usr/bin'],
     tries       => $cli_tries,
     try_sleep   => $cli_try_sleep,
     refreshonly => true,
