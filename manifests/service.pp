@@ -7,6 +7,7 @@ class jenkins::service {
     ensure     => $jenkins::service_ensure,
     enable     => $jenkins::service_enable,
     provider   => $jenkins::service_provider,
+    flags      => $jenkins::service_flags,
     hasstatus  => true,
     hasrestart => true,
   }
