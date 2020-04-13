@@ -22,10 +22,11 @@ class jenkins::cli {
         -> Anchor['jenkins::end']
   }
 
+  $port = jenkins_port()
+  $prefix = jenkins_prefix()
+
   $jar = "${jenkins::libdir}/jenkins-cli.jar"
-  $extract_jar = "${jenkins::jar_cmd} -xf ${jenkins::libdir}/jenkins.war WEB-INF/jenkins-cli.jar"
-  $move_jar = "mv WEB-INF/jenkins-cli.jar ${jar}"
-  $remove_dir = 'rm -rf WEB-INF'
+  $download_jar = "ftp -o ${jenkins::libdir}/jenkins-cli.jar http://127.0.0.1:${port}/jenkins/jnlpJars/jenkins-cli.jar"
   $cli_tries = $jenkins::cli_tries
   $cli_try_sleep = $jenkins::cli_try_sleep
 
@@ -37,7 +38,7 @@ class jenkins::cli {
     creates => $jar,
   }
   ~> exec { 'jenkins-cli' :
-    command     => "${extract_jar} && ${move_jar} && ${remove_dir}",
+    command     => "${download_jar}",
     path        => ['/bin', '/usr/bin'],
     cwd         => '/tmp',
     refreshonly => true,
@@ -50,9 +51,6 @@ class jenkins::cli {
     mode    => '0644',
     require => Exec['jenkins-cli'],
   }
-
-  $port = jenkins_port()
-  $prefix = jenkins_prefix()
 
   # The jenkins cli command with required parameter(s)
   $cmd = join(
