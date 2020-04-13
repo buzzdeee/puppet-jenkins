@@ -154,8 +154,8 @@
 # @param java_cmd
 #   where to find the java cmd, default '/usr/bin/java'
 #
-# @param jre_cmd
-#   where to find the jre cmd, default '/usr/bin/jre'
+# @param jar_cmd
+#   where to find the jar cmd, default '/usr/bin/jre'
 #
 # @param repo_proxy
 #   proxy to download packages
@@ -319,7 +319,7 @@ class jenkins(
   Boolean $configure_firewall                     = false,
   Boolean $install_java                           = $jenkins::params::install_java,
   Any $java_cmd                                   = '/usr/bin/java',
-  Any $jre_cmd                                    = '/usr/bin/jre',
+  Any $jar_cmd                                    = '/usr/bin/jar',
   Optional[String] $repo_proxy                    = undef,
   Optional[String] $proxy_host                    = undef,
   Optional[Integer] $proxy_port                   = undef,
