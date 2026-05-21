@@ -26,7 +26,7 @@ class jenkins::cli {
   $prefix = jenkins_prefix()
 
   $jar = "${jenkins::libdir}/jenkins-cli.jar"
-  $download_jar = "ftp -o ${jenkins::libdir}/jenkins-cli.jar http://127.0.0.1:${port}/jenkins/jnlpJars/jenkins-cli.jar"
+  $download_jar = "curl -L http://127.0.0.1:${port}/jenkins/jnlpJars/jenkins-cli.jar -o ${jenkins::libdir}/jenkins-cli.jar"
   $cli_tries = $jenkins::cli_tries
   $cli_try_sleep = $jenkins::cli_try_sleep
 
