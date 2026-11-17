@@ -39,7 +39,7 @@ class jenkins::cli {
   }
   ~> exec { 'jenkins-cli' :
     command     => "${download_jar}",
-    path        => ['/bin', '/usr/bin'],
+    path        => ['/bin', '/usr/bin', '/usr/local/bin'],
     cwd         => '/tmp',
     refreshonly => true,
   }
